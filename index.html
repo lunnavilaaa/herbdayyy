@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<title>Happy Birthday</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Playfair+Display:wght@400;500&display=swap" rel="stylesheet">
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+
+body{
+  min-height:100vh;
+  font-family:'Inter',sans-serif;
+  color:#eee;
+  overflow:hidden;
+  background:
+    radial-gradient(circle at 20% 20%, #2b1055, transparent 40%),
+    radial-gradient(circle at 80% 30%, #1b3b6f, transparent 45%),
+    radial-gradient(circle at 50% 80%, #0b132b, transparent 40%),
+    linear-gradient(180deg,#05010d,#09021a);
+}
+
+/* ===== PARALLAX LAYER ===== */
+.galaxy{
+  position:fixed;
+  inset:-40px;
+  background:
+    radial-gradient(circle at 30% 30%, rgba(120,140,255,.12), transparent 40%),
+    radial-gradient(circle at 70% 60%, rgba(180,200,255,.12), transparent 45%);
+  transition:transform .15s linear;
+  z-index:0;
+}
+
+/* ===== PAGE ===== */
+.page{
+  position:absolute;
+  inset:0;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  transition:opacity .9s ease;
+  z-index:1;
+}
+
+.hidden{opacity:0;pointer-events:none}
+
+/* ===== PAGE 1 ===== */
+.page1{
+  flex-direction:column;
+  text-align:center;
+}
+
+.page1 h1{
+  font-family:'Playfair Display',serif;
+  font-size:42px;
+  margin-bottom:28px;
+}
+
+.page1 button{
+  background:transparent;
+  border:1px solid rgba(255,255,255,.4);
+  padding:10px 24px;
+  border-radius:25px;
+  font-size:14px;
+  color:#eee;
+  cursor:pointer;
+  margin:6px;
+  transition:.3s;
+}
+
+.page1 button:hover{
+  background:rgba(255,255,255,.15);
+}
+
+/* ===== PAGE 2 ===== */
+.page2{
+  padding:40px 20px;
+  overflow-y:auto;
+}
+
+.container{
+  max-width:620px;
+  margin:auto;
+  background:rgba(15,18,45,.85);
+  backdrop-filter:blur(14px);
+  padding:42px 32px;
+  border-radius:24px;
+  border:1px solid rgba(255,255,255,.15);
+  text-align:center;
+  box-shadow:
+    0 25px 50px rgba(0,0,0,.6),
+    0 0 35px rgba(120,140,255,.18);
+  animation:fadeUp 1.4s ease forwards;
+  transition:box-shadow .4s ease;
+}
+
+.container:hover{
+  box-shadow:
+    0 30px 60px rgba(0,0,0,.7),
+    0 0 45px rgba(140,160,255,.35);
+}
+
+/* ===== PHOTO ===== */
+.photo-frame{
+  width:120px;
+  height:120px;
+  margin:0 auto 22px;
+  border-radius:50%;
+  padding:4px;
+  background:linear-gradient(135deg,#8b5cf6,#3b82f6,#22d3ee);
+  box-shadow:0 0 30px rgba(120,140,255,.5);
+  transition:transform .4s ease, box-shadow .4s ease;
+}
+
+.photo-frame:hover{
+  transform:scale(1.05);
+  box-shadow:0 0 45px rgba(160,180,255,.7);
+}
+
+.photo-frame img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  border-radius:50%;
+}
+
+/* ===== TEXT ===== */
+.container h2{
+  font-family:'Playfair Display',serif;
+  font-size:26px;
+  margin-bottom:10px;
+}
+
+.date{
+  font-size:13px;
+  color:#ccc;
+  margin-bottom:24px;
+}
+
+.container p{
+  font-size:14.5px;
+  line-height:1.85;
+  color:#e6e6e6;
+}
+
+/* ===== EASTER EGG ===== */
+.easter{
+  margin-top:26px;
+  font-size:12px;
+  opacity:.4;
+  cursor:pointer;
+  transition:.3s;
+}
+
+.easter:hover{opacity:.8}
+
+/* ===== STARS ===== */
+.star{
+  position:fixed;
+  bottom:-20px;
+  width:8px;
+  height:8px;
+  background:white;
+  clip-path:polygon(
+    50% 0%,61% 35%,98% 35%,68% 57%,79% 91%,
+    50% 70%,21% 91%,32% 57%,2% 35%,39% 35%
+  );
+  animation:starFloat linear infinite;
+  filter:drop-shadow(0 0 6px rgba(180,200,255,.8));
+  z-index:0;
+}
+
+@keyframes starFloat{
+  from{transform:translateY(0);opacity:0}
+  20%{opacity:.8}
+  to{transform:translateY(-120vh);opacity:0}
+}
+
+@keyframes fadeUp{
+  from{opacity:0;transform:translateY(20px)}
+  to{opacity:1;transform:translateY(0)}
+}
+
+/* ===== RESPONSIVE ===== */
+@media(max-width:480px){
+  .page1 h1{font-size:34px}
+  .container{padding:34px 22px}
+}
+</style>
+</head>
+
+<body>
+
+<div class="galaxy" id="galaxy"></div>
+
+<audio id="bgMusic" loop>
+  <source src="Taylor Swift - Bejeweled (Official Instrumental).mp3" type="audio/mpeg">
+</audio>
+
+<!-- PAGE 1 -->
+<div class="page page1" id="page1">
+  <h1>hi, mal!</h1>
+  <button onclick="playMusic()">klik enih dulu dah</button>
+  <button onclick="openWishes()">abistu ini</button>
+</div>
+
+<!-- PAGE 2 -->
+<div class="page page2 hidden" id="page2">
+  <div class="container">
+    <div class="photo-frame">
+      <img src="malina.jpeg">
+    </div>
+
+    <h2>happy birthday ya, cantik.</h2>
+    <div class="date">for your special 20th bday</div>
+
+    <p>
+      semoga di umur baru ini,
+      lo ga terlalu keras sama diri sendiri.
+      hidup emang ga selalu bike-bike aza,
+      gue beneran berharap lo bisa lebih ngerayain
+      diri lo sendiri, bukan cuma karena umur lo nambah ya..
+      tp krn lo udah bertahan, belajar, dan terus jalan
+      maju.<br><br>
+
+      btw kita udah bareng kurang lebihnya 10 tahun, ya. 
+      dari hal-hal kecil jadi masalah gede (kayak pas gue
+      jatoh ke gorong-gorong contohnya, terus gue ngambek
+      ke lo— even that's not ur fault tho LOL) dan sampe
+      sekarang, sampe hidup kita getting deeper setiap
+      harinya. but here we are.<br><br>
+      
+      gue tau, ga semua hari adalah hari yg menyenangkan
+      buat lo, mal. mungkin ada cape yg ga pernah lo
+      ceritain ke gue, ada kuat
+      yg dipaksa-paksain, ada nangis yg ditahan-tahan. tapi
+      alhamdulillahnya, lo masih
+      bertahan awkaokwa. makasih udah tumbuh bareng ama
+      gue yaaa, yg selalu ada di fase kehidupan *ea,
+      semoga lanjut sampe tuwir. people come and go, i knew
+      that, but i always hope u'll stay. <br><br>
+
+      dan semoga umur baru ini
+      ngasih lo lebih banyak alasan buat bahagia,
+      dan lebih sedikit hal yang bikin lo ragu sama
+      diri sendiri. if u ever need anything, i’ll
+      be right here, doing everything i can for u.
+      plz remember u're never alone. <br><br>
+    </p>
+
+    <div class="easter" onclick="easterEgg()">— ☽</div>
+  </div>
+</div>
+
+<script>
+/* MUSIC */
+function playMusic(){
+  document.getElementById("bgMusic").play();
+}
+
+/* PAGE SWITCH */
+function openWishes(){
+  page1.classList.add("hidden");
+  page2.classList.remove("hidden");
+  startStars();
+}
+
+/* STARS */
+function startStars(){
+  setInterval(()=>{
+    const s=document.createElement("div");
+    s.className="star";
+    s.style.left=Math.random()*100+"vw";
+    s.style.animationDuration=(Math.random()*8+6)+"s";
+    document.body.appendChild(s);
+    setTimeout(()=>s.remove(),15000);
+  },350);
+}
+
+/* PARALLAX */
+document.addEventListener("mousemove",e=>{
+  const x=(e.clientX/window.innerWidth-.5)*20;
+  const y=(e.clientY/window.innerHeight-.5)*20;
+  galaxy.style.transform=`translate(${x}px,${y}px)`;
+});
+
+/* EASTER EGG */
+function easterEgg(){
+  alert("iya, yang gorong-gorong itu masih lucu.");
+}
+</script>
+
+</body>
+</html>
